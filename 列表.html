@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表</title>
+    <style>
+     /*   ul{
+            list-style: none; !*去掉ul中样式带有的·  *!
+            background: #ff0000;
+            padding: 0;
+        }
+        li{
+            background: #00ff00;
+        }*/
+        /*样式重置，不同的浏览器会存在一些默认的样式，清除它，方便自己编写*/
+        *{
+            margin:0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        #menu li{/*后代选择器*/
+            float: left;
+            width: 120px;
+            height: 30px;
+            background: #cccccc;
+            margin-right: 5px;
+            text-align: center;
+            line-height: 30px;
+        }
+        #menu{
+            height:30px;
+        }
+        #menu a{/*空格表示后代选择，不一定就是儿子；只要是后代就可以选到，不管后代有多深*/
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<ul id="menu">
+    <li><a href="">link1</a>
+    </li>
+    <li><a href="">link2</a>
+    </li>
+    <li><a href="">link3</a>
+    </li>
+</ul>
+
+</body>
+</html>
