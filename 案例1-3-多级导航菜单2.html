@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例1-3-多级导航菜单</title>
+    <style>
+        /*样式重置*/
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,ol{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        /*后代选择器，准确性更高*/
+        #menu  li{
+            float: left;
+            margin-right: 5px;
+        }
+        #menu .main-menu{
+            display: block;
+            background: #cccccc;
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+        }
+        #menu .sub-menu{
+            background: #eeeeee;
+            display: none;
+        }
+        #menu .sub-menu li{
+            float:none;
+            border-bottom: 1px dotted #000;
+            height: 25px;
+            line-height: 25px;
+        }
+        /*在li上加hover,表示在滑入滑出li时，有交互操作，即sub-menu的样式发成了改变
+        但浏览器IE6不兼容*/
+        /*#menu >li:hover .sub-menu{*/
+            /*display: block;*/
+        /*}*/
+    </style>
+</head>
+<body>
+    <ul id="menu">
+        <!--一级菜单亦可以点击跳转的形式-->
+        <li>
+            <a href="#" class="main-menu">link1</a>
+            <ul class="sub-menu">
+                <li><a href="#">sublink1</a></li>
+                <li><a href="#">sublink2</a></li>
+                <li><a href="#">sublink3</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="main-menu">link2</a>
+            <ul class="sub-menu">
+                <li><a href="#">sublink1</a></li>
+                <li><a href="#">sublink2</a></li>
+                <li><a href="#">sublink3</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" class="main-menu">link3</a>
+            <ul class="sub-menu">
+                <li><a href="#">sublink1</a></li>
+                <li><a href="#">sublink2</a></li>
+                <li><a href="#">sublink3</a></li>
+            </ul>
+        </li>
+    </ul>
+    <script>
+//        document.getElementsByClassName('main-menu');//通过class名称来找元素，IE8以及其之前都不能用，有兼容性问题
+        var oMenu = document.getElementById('menu');
+        var aLi = oMenu.children; //找oMenu的孩子（一级的,不找孙子），返回的是数组
+        for(var i=0;i<aLi.length;i++){
+            aLi[i].onmousemove = function(){
+//                this.children[1].style.display = 'block';
+                this.getElementsByTagName('ul')[0].style.display = 'block';//这两种都可以
+        };
+            aLi[i].onmouseout = function(){
+                this.children[1].style.display = 'none';
+            };
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
