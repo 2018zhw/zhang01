@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+    </style>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="knockout-3.4.0.js"></script>
+</head>
+<body>
+   <div id="content1">
+       Year:<input type="text" data-bind="value:Year"></br>
+       Month:<input type="text" data-bind="value:Month"></br>
+       Year:<input type="text" data-bind="value:Day"></br>
+       Date:<span data-bind="html:Date"></span>
+       <input data-bind="value:Date">
+   </div>
+   <script>
+        //定义一个ViewModel
+        //先通过输入input框输入年，月，日的值组合显示在最下面的input里，然后利用ko.pureComputed()修改组合数据同时更改  组成组合数据的成员数据的目的
+        var ViewModel = function(){
+            var self = this;
+            self.Year = ko.observable("");
+            self.Month = ko.observable("");
+            self.Day = ko.observable("");
+
+            //定义一个变量来接收Year,Month,Day的每次组合
+            self.Date = ko.computed(function(){
+                return self.Year() + "年" + self.Month() + "月" + self.Day()+ "日" ;
+            },self);
+
+          // 这个ko的方法实现的是组合好的数据可以编辑修改，一旦修改了，也会使组合成该数据的成员数据也跟着变化
+            self.Date = ko.pureComputed({
+              // json对象
+                write:function(value){ //write是输入的值，这个参数value就是组合数据，上面的Date
+                    //先得到组合字符串的的数字下标   2018年8月7日
+                    var indexOfYear = value.indexOf('年');
+                    var indexOfMonth = value.indexOf('月');
+                    var indexOfDay = value.indexOf('日');
+
+                    self.Year(value.substring(0,indexOfYear)); //获取年这个值
+                    self.Month(value.substring(indexOfYear+1,indexOfMonth));
+                    self.Day(value.substring(indexOfMonth+1,indexOfDay));
+
+                },
+                read:function(){ //输出的值
+                    return self.Year() + "年" + self.Month() + "月" + self.Day()+ "日" ;
+                },
+                 owner: self
+            });
+        }
+
+       //用ko实现
+       $(document).ready(function(){
+           ko.applyBindings(ViewModel);
+       });
+   </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="knockout-3.4.0.js"></script>
+</head>
+<body>
+
+    Choose a ticket class:
+    <select data-bind="options: tickets,
+                           optionsCaption: 'Choose...',
+                           optionsText: 'name',
+                           value: chosenTicket">
+    </select>
+    </p>
+    <p data-bind="template: 'ticketTemplate'">
+    </p>
+    <script id="ticketTemplate" type="text/x-jquery-tmpl">
+            {{if chosenTicket}}
+                You have chosen <b>${ chosenTicket().name }</b>
+                ($${ chosenTicket().price })
+                <button data-bind="click: resetTicket">Clear</button>
+            {{/if}}
+    </script>
+    <script type="text/javascript">
+        var viewModel = {
+            tickets: [
+                { name: "Economy", price: 199.95 },
+                { name: "Business", price: 449.22 },
+                { name: "First Class", price: 1199.99 }
+            ],
+            chosenTicket: ko.observable(),
+            resetTicket: function () { this.chosenTicket(null) }
+        };
+        ko.applyBindings(viewModel);
+    </script>
+</body>
+</html>

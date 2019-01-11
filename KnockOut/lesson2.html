@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="knockout-3.4.0.js"></script>
+</head>
+<body>
+   <div id="content1">
+       <select  id="userNameList" data-bind="options:userNames,optionsText:'Key',optionsValue:'Value',selectedOptions:selectedUserName">
+       </select>
+       <a href="#" id="showSelectValue">显示</a>
+       <b id="selectValue" data-bind="html:selectedUserName"></b>
+
+   </div>
+
+   <script>
+       <!--下拉选项卡的绑定-->
+       function ReaderSelectOption(datas,selectNode){
+           var optionString = '';
+           for(var i in datas){
+               //拼接option标签
+               optionString += '<option value=' + datas[i] +'>'+ datas[i] +'</option>';
+           }
+           selectNode.html(optionString);
+       }
+      /* $(document).ready(function(){
+
+        var userNames = ['tom','jerry','david'];
+        var userNameList = $('#userNameList');
+        ReaderSelectOption(userNames,userNameList);
+        //            给a标签添加点击事件，
+        $('#showSelectValue').click(function(){
+        var selectValue = $('#selectValue');
+        selectValue.html(userNameList.val());
+        })
+
+        });*/
+
+       //用ko实现
+       $(document).ready(function(){
+
+           var ViewModel = function(){
+               var self = this;
+//               self.userNames = ko.observableArray(['tom','jerry','david']); //ko的观察数组
+               self.userNames = ko.observableArray([{Key:'tom',Value:'1'},{Key:'jerry',Value:'2'},{Key:'david',Value:'3'}]); //对象数组,
+               // 点击下拉列表中的值会显示其他值，即对象数组中Value中的值
+
+               self.selectedUserName = ko.observable();
+           };
+
+           var currentModel = new ViewModel();
+           ko.applyBindings(currentModel);
+
+       });
+   </script>
+</body>
+</html>

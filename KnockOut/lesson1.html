@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="knockout-3.4.0.js"></script>
+</head>
+<body>
+    <div id="content1">
+        userName: <input type="text" id="userNameText" value="inputValue" data-bind="value:UserName">
+        <p>
+            hello <b id="userNameView" data-bind="html:UserName">inputValue</b>
+        </p>
+        <p>
+            hello <b id="userNameView1" data-bind="html:UserName">inputValue</b>again
+        </p>
+        <p>
+            <input type="hidden" data-bind="value:UserName">
+        </p>
+    </div>
+
+    <script>
+        <!--一个input框，改变其内容，下面有一行跟着改变值-->
+        /*$(document).ready(function(){
+            var userNameText = $('#userNameText');//取该html元素
+            var userNameView = $('#userNameView');
+            userNameText.bind('change',function(){
+                var userName = $(this).val();
+                console.log(userName);
+                userNameView.html(userName);
+            });
+        });*/
+       //利用knockout实现
+        $(document).ready(function(){
+            var ViewModel = function(){
+                var self = this;
+                self.UserName = ko.observable();//  默认语法，ko会监控UserName的值，页面上所有绑定了UserName的值，在UserName发生变化时，他们也会发生变化
+            };
+            var cunrrentViewModel = new ViewModel();
+            ko.applyBindings(cunrrentViewModel); //绑定
+            console.log($('#userNameView1').val());
+
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        td{
+            border:1px solid #ccc
+        }
+        #main-table{
+            border:1px solid black;
+        }
+    </style>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="knockout-3.4.0.js"></script>
+</head>
+<body>
+   <div id="content1">
+      <table id="main-table">
+          <thead>
+            <tr>
+                <td>id</td>
+                <td>英文名</td>
+                <td>中文名</td>
+                <td>描述</td>
+            </tr>
+          </thead>
+          <tbody id="tableBody" data-bind="foreach:Planet"><!--此处的Planets是定义的observableArray对象-->
+            <tr>
+                <td data-bind="html:$index"></td>
+                <td data-bind="html:englishName"></td>
+                <td data-bind="html:(chineseName == '地球' ? chineseName+'<b>[家]</b>':chineseName)"></td>
+                <td data-bind="html:description"></td>
+            </tr>
+          </tbody>
+      </table>
+
+   </div>
+   <button href="#" data-bind="click:newPlanet">新增</button>
+   <script>
+        //定义一个ViewModel
+       var ViewModel = {
+           Planet : ko.observableArray([])
+       };
+       //定义一个列表
+       var Planets = [
+           {id:1,englishName:'Mercury',chineseName:'水星',description:'离太阳最近的行星'},
+           {id:2,englishName:'Venus',chineseName:'金星',description:'拥有非常厚的大气层'},
+           {id:3,englishName:'Earth',chineseName:'地球',description:'我们的家园'},
+           {id:4,englishName:'Mars',chineseName:'火星',description:'一颗红色的行星，也许有过水'},
+           {id:5,englishName:'Jupiter',chineseName:'木星',description:'太阳系最大的行星'},
+           {id:6,englishName:'Saturn',chineseName:'土星',description:'拥有最美丽光环的行星'},
+           {id:7,englishName:'Uranus',chineseName:'天王星',description:'内核是一个巨大的海洋（8000米）'},
+           {id:8,englishName:'Neptune',chineseName:'海王星',description:'一颗优雅的，淡蓝色行星'},
+           {id:9,englishName:'Pluto',chineseName:'冥王星',description:'曾经是行星的行星'}
+       ];
+
+        ViewModel.Planet(Planets);
+
+       var newPlanet = function(){
+           Planets.push({id:10,englishName:'unknow',chineseName:'未知行星',description:'等待人类发现'});
+ //        return false;//防止页面发生滚动
+          ViewModel.Planet(Planets);//这句话很重要，加了一条数据之后，数组中数据变了，这时要重新塞进绑定的变量里
+       };
+
+       //将数组拼接成html字符串，并将该字符串绑定到table元素中
+       function ReaderPlanets(){
+           var tableBody = $('#tableBody');
+           var planetsString = '';//用来拼接字符串
+           for(var i in Planets){
+               planetsString += '<tr>'; //开头
+               planetsString += '<td>' + Planets[i].id +'</td>';
+               planetsString += '<td>' + Planets[i].englishName +'</td>';
+               planetsString += '<td>' + Planets[i].chineseName +'</td>';
+               planetsString += '<td>' + Planets[i].description +'</td>';
+               planetsString += '</tr>';//结束
+           }
+           //将拼接完的字符串放到tableBody中
+           tableBody.html(planetsString);
+       }
+       //正常js实现
+       /* $(document).ready(function(){
+//            ReaderPlanets();
+      });*/
+
+       //用ko实现
+       $(document).ready(function(){
+           ko.applyBindings(ViewModel);
+       });
+   </script>
+</body>
+</html>
