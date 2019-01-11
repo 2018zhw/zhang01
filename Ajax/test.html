@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax Demo</title>
+</head>
+<body>
+
+    <h1>员工查询</h1>
+    <label>请输入员工编号：</label>
+    <input type="text" id ="keyword" /><br/>
+
+    <button id="search">查询</button>
+    <p id="searchResult"></p>
+
+
+    <h1>员工创建</h1>
+    <label>请输入员工姓名：</label>
+    <input type="text" id ="staffName" /><br/>
+    <label>请输入员工编号：</label>
+    <input type="text" id ="staffNum" /><br/>
+    <label>请输入员工性别：</label>
+    <select id="staffSex">
+        <option>男</option>
+        <option>女</option>
+        <option>未知</option>
+    </select><br/>
+    <label>请输入员工职位：</label>
+    <input type="text" id ="staffJob" /><br/>
+    <button id="save">保存</button>
+    <p id="creatResult"></p>
+
+
+    <script>
+
+        //get请求
+        document.getElementById("search").onclick = function(){
+            //发送ajax查询请求并处理
+            var request = new XMLHttpRequest();
+            request.open("GET","server.php?number=" +  document.getElementById("keyword").value );
+            request.send();
+
+            //监听onreadystatechange的值
+            request.onreadystatechange = function(){
+                //获取readystate属性的值
+                if(request.readyState === 4){
+                    if(request.status === 200){
+                        //请求成功，更新查询结果
+                        document.getElementById("searchResult").innerHTML = request.responseText;
+                    }else{
+                        alert("发生错误："+request.status);
+                    }
+                }
+            };
+
+        };
+
+        //post请求
+
+
+    </script>
+</body>
+</html>
