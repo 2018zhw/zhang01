@@ -33,7 +33,7 @@
         }
         #menu .sub-menu li{
             float:none;
-            border-bottom: 1px dotted #000;
+            border-bottom: 1px dotted #000;//dotted点点点
             height: 25px;
             line-height: 25px;
         }
@@ -76,6 +76,7 @@
 //        document.getElementsByClassName('main-menu');//通过class名称来找元素，IE8以及其之前都不能用，有兼容性问题
         var oMenu = document.getElementById('menu');
         var aMainMenu = oMenu.getElementsByTagName('a'); // 在id是menu中找a标签 ，缩小范围，一共有12个a标签
+        //console.log(aMainMenu);//得到的是节点列表nodeList,并不是严格意义上的数组
 //        var aMainMenu = oMenu.getElementsByClassName('main-menu');
         var aSubMenu = oMenu.getElementsByTagName('ul');//只有3个
         var count = 0;
