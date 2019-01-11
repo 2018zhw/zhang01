@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例4-1-折叠菜单1</title>
+    <style>
+        *{
+            margin :0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        a{
+            text-decoration:none;
+        }
+        #menu{
+            width:200px;
+
+        }
+        #menu h3{
+            height: 40px;
+            background: #000000;
+            color:#fff;
+            line-height: 40px;
+            cursor:pointer;/*当前鼠标的形状，，小手*/
+        }
+        #menu .main-menu{
+
+        }
+        #menu .sub-menu{
+            display: none;
+            border:1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <ul id="menu">
+        <li class="main-menu">
+            <h3>管理区</h3>
+            <ul class="sub-menu">
+                <li><a href="#">001</a></li>
+                <li><a href="#">002</a></li>
+                <li><a href="#">003</a></li>
+            </ul>
+        </li>
+        <li class="main-menu">
+            <h3>交流区</h3>
+            <ul class="sub-menu">
+                <li><a href="#">001</a></li>
+                <li><a href="#">002</a></li>
+                <li><a href="#">003</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        var oMenu = document.getElementById('menu');
+        var aH3 = oMenu.getElementsByTagName('h3');
+//        var aSubMenu = oMenu.getElementsByTagName('ul');
+        //true代表显示，false代表隐藏
+
+        //给h3绑定单击事件，找h3的兄弟
+        for(var i=0;i<aH3.length;i++){
+            aH3[i].bShow = false;//一个标识位，用来标识sub-menu是否显示
+            aH3[i].onclick = function(){
+               // this.nextSibling; //找自己的兄弟,在标准浏览器下会找到空格是Text,在IE中只找元素节点，不找空格
+              //  this.nextElementSibling; //直接找到元素节点，但在IE中不支持，不可以随便用，为了解决兼容性问题，
+                // 很多时候就要自己封装函数去实现某些功能
+                var oSubMenu = next(this);
+                if(oSubMenu){
+//                    alert(oSubMenu.style.display=="none"); //返回空字符串。oSubMenu.style.display只能得到内联样式的值
+                   /* if(oSubMenu.style.display == 'block'){
+                        oSubMenu.style.display = 'none';
+                    }else{
+                        oSubMenu.style.display = 'block';
+                    }*/
+                    //有一个需求，就两种状态，要么真，要么假，设置boolean值来达到目的
+                    if(this.bShow){ //判断自己的BShow属性
+                        oSubMenu.style.display = 'none';
+                    }else{
+                        oSubMenu.style.display = 'block';
+                    }
+                    this.bShow = !this.bShow;
+                }
+
+            };
+        }
+
+        //帮助找到形参的下一个元素兄弟，兼容所有浏览器，找得到就返回，找不到返回null
+        function next(elem){
+            do{
+               elem = elem.nextSibling;
+            }while(elem && elem.nodeType !=1 ); //判断是不是元素节点，！=1 表示不是元素节点，接着找;并且elem不能是null
+            return elem;
+        }
+       //js中简化的语句  非零数字，非空字符串(有一个空格也就不是空字符串)都代表true，
+        // 有效的；0，"",undefined;null都是false
+//        var a = " ";
+//        if(a){
+//            console.log(11);
+//        }
+
+    </script>
+</body>
+</html>

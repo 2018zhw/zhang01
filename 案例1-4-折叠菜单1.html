@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例4-1-折叠菜单1</title>
+    <style>
+        *{
+            margin :0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        a{
+            text-decoration:none;
+        }
+        #menu{
+            width:200px;
+
+        }
+        #menu h3{
+            height: 40px;
+            background: #000000;
+            color:#fff;
+            line-height: 40px;
+            cursor:pointer;/*当前鼠标的形状，，小手*/
+        }
+        #menu .main-menu{
+
+        }
+        #menu .sub-menu{
+            display: none;
+            border:1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <ul id="menu">
+        <li class="main-menu">
+            <h3 onselectstart="return false;">管理区</h3>
+            <ul class="sub-menu">
+                <li><a href="#">001</a></li>
+                <li><a href="#">002</a></li>
+                <li><a href="#">003</a></li>
+            </ul>
+        </li>
+        <li class="main-menu">
+            <h3>交流区</h3>
+            <ul class="sub-menu">
+                <li><a href="#">001</a></li>
+                <li><a href="#">002</a></li>
+                <li><a href="#">003</a></li>
+            </ul>
+    </ul>
+        </li>
+    </ul>
+
+    <script>
+
+        var oMenu = document.getElementById('menu');
+        var aH3 = oMenu.getElementsByTagName('h3');
+        var aSubMenu = oMenu.getElementsByTagName('ul');
+        //给h3绑定单击事件，找h3的兄弟
+        for(var i=0;i<aH3.length;i++){
+            //给每个h3对象自定义属性index,瞬间保存住当前i的值
+            aH3[i].index = i;
+            aH3[i].bFlag = false;//给每一个H3自定义标志位，因为以后并不知道需要有多少个；false表示当前是合上的，
+            //true表示是打开的
+            aH3[i].onclick = function(){ //function是事件处理函数，在onclick事件触发之后才会执行
+                //点击h3，让他下面的ul显示：必须通过h3找到和下面的ul
+                if(this.bFlag){
+                    aSubMenu[this.index].style.display = 'none';
+                }else{
+                    aSubMenu[this.index].style.display = 'block';
+                }
+                this.bFlag = !this.bFlag;   //取非赋值
+            };
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例4-1-折叠菜单2</title>
+    <style>
+        *{
+            margin :0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        a{
+            text-decoration:none;
+        }
+        #menu{
+            width:200px;
+
+        }
+        #menu h3{
+            height: 40px;
+            background: #000000;
+            color:#fff;
+            line-height: 40px;
+            cursor:pointer;/*当前鼠标的形状，，小手*/
+        }
+        #menu .main-menu{
+
+        }
+        #menu .sub-menu{
+            display: none;
+            border:1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <ul id="menu">
+        <li class="main-menu">
+            <h3 onselectstart="return false;">管理区</h3>
+            <ul class="sub-menu">
+                <li><a href="#">001</a></li>
+                <li><a href="#">002</a></li>
+                <li><a href="#">003</a></li>
+            </ul>
+        </li>
+        <li class="main-menu">
+            <h3>交流区</h3>
+            <ul class="sub-menu">
+                <li><a href="#">001</a></li>
+                <li><a href="#">002</a></li>
+                <li><a href="#">003</a></li>
+            </ul>
+    </ul>
+        </li>
+    </ul>
+
+    <script>
+        var oMenu = document.getElementById('menu');
+        var aLi = oMenu.getElementsByTagName('li');
+        //筛选我们需要的li,给li绑定单击事件 ，找他的子代好找
+        for(var i=0; i<aLi.length; i++){
+            if(aLi[i].className == 'main-menu'){
+                aLi[i].bFlag = false;//标志位，false是合上的
+                aLi[i].onclick = function(){
+                    if(this.bFlag){
+                        this.getElementsByTagName('ul')[0].style.display = 'none';
+                    }else{
+                        this.getElementsByTagName('ul')[0].style.display = 'block';
+                    }
+                    this.bFlag = !this.bFlag;
+                };
+            }
+        }
+
+
+    </script>
+</body>
+</html>
