@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡3</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        ul{
+            list-style: none;
+        }
+        a{
+            text-decoraction:none;
+        }
+        #container{
+            width:400px;
+            height:200px;
+            /*background: #ff0000;*/
+            margin:50px auto;
+        }
+        #menu{
+            height:30px;
+        }
+        #menu li{
+            float: left;
+            width:100px;
+            height:30px;
+            background: #cccccc;
+            margin-right: 10px;
+            text-align: center;
+            line-height: 30px;
+        }
+        #content{
+            background: #ccc;
+            /*width: auto;*/
+            height:170px;
+            border-top:1px solid;
+        }
+        #menu .selected{
+            background: black;
+            color:white;
+        }
+        /*显示第一个div*/
+        #content .selected{
+            display:block;
+        }
+        /*先都隐藏，把该显示的再显示出来*/
+        #content div{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <ul id = 'menu'>
+            <li class="selected">js</li>
+            <li>html</li>
+            <li>css</li>
+        </ul>
+        <div id="content">
+            <div class="selected">1111111</div>
+            <div>2222222</div>
+            <div>3333333</div>
+        </div>
+    </div>
+    <script>
+        <!--3个div设置相关div的显示和隐藏-->
+        var oMenu = document.getElementById('menu');//单个id找不到是none
+        var aLi = oMenu.getElementsByTagName('li');//这个找不到是一个空的数组
+        var oContent = document.getElementById('content');
+        var aDiv = oContent.getElementsByTagName('div');
+
+        for(var i=0;i<aLi.length;i++){
+            aLi[i].index = i;
+            aLi[i].onclick = function(){
+                //先找到className是selected的li,
+                for(var i=0;i<aLi.length;i++){
+                        aLi[i].className = "";
+                }
+                this.className = 'selected'; //给当前用户点击的li设置变黑属性
+                for(var i=0;i<aDiv.length;i++){
+                    aDiv[i].className = "";
+                }//这两个for循环次数一样可以放在一起写
+
+                aDiv[this.index].className = "selected";
+            };
+            aLi[i].onselectstart = function(){
+                return false;
+            };
+        }
+
+
+    </script>
+</body>
+</html>
